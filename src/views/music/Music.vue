@@ -1,22 +1,11 @@
 <template>
   <div style="padding-top:10px;">
     <span
-      v-for="(item, index) in permissions"
+      v-for="(item, index) in menus"
       :key="index"
       class="gutter"
     >
-      <mu-button
-        color="teal"
-        v-if="item === 'music:add'"
-      >添加歌曲</mu-button>
-      <mu-button
-        color="success"
-        v-if="item === 'music:edit'"
-      >编辑歌曲</mu-button>
-      <mu-button
-        color="error"
-        v-if="item === 'music:delete'"
-      >删除歌曲</mu-button>
+      <mu-button :color="item.icon">{{ item.title }}</mu-button>
     </span>
     <v-card>
       <v-card-title>
@@ -45,6 +34,7 @@ export default {
   data() {
     return {
       permissions: [],
+      menus: [],
       search: '',
       headers: [
         {
@@ -111,9 +101,14 @@ export default {
       ]
     }
   },
+
   created() {
-    this.permissions = this.$store.state.menuList[1].subMenus[1].permissions
-    console.log(this.permissions)
+    //获取当前路由所在的表单
+    let index = this.$route.query.index
+    let index1 = this.$route.query.index1
+    console.log(index, index1)
+    this.menus = JSON.parse(localStorage.getItem('menuList'))[index].subMenus[index1].subMenus
+    console.log(this.menus)
   }
 }
 </script>
